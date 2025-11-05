@@ -16,10 +16,10 @@ const AirQuality = ({ aqi }: AirQualityProps) => {
   const level = getAQILevel(aqi);
 
   return (
-    <Card className="glass dark:glass-dark p-6 rounded-3xl border-2">
+    <Card className="glass dark:glass-dark p-6 rounded-3xl border-2 hover-lift animate-fade-in">
       <div className="flex items-center gap-3 mb-4">
-        <Wind className="w-6 h-6 text-primary" />
-        <h3 className="text-xl font-semibold">Air Quality</h3>
+        <Wind className="w-7 h-7 text-primary drop-shadow" />
+        <h3 className="text-2xl font-bold">Air Quality</h3>
       </div>
 
       <div className="space-y-4">

@@ -35,6 +35,9 @@ const WeatherBackground = ({ condition }: WeatherBackgroundProps) => {
 
   return (
     <div className={`fixed inset-0 -z-10 ${getBackgroundClass()} transition-all duration-1000`}>
+      {/* Gradient overlay for depth */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10 dark:to-black/30" />
+      
       {/* Animated particles for rain/snow */}
       {(condition === "rain" || condition === "snow") && (
         <div className="absolute inset-0 overflow-hidden">
@@ -42,7 +45,9 @@ const WeatherBackground = ({ condition }: WeatherBackgroundProps) => {
             <div
               key={particle.id}
               className={`absolute ${
-                condition === "rain" ? "w-0.5 h-12 bg-white/30" : "w-2 h-2 bg-white rounded-full"
+                condition === "rain" 
+                  ? "w-0.5 h-16 bg-gradient-to-b from-white/40 to-white/10" 
+                  : "w-2 h-2 bg-white/80 rounded-full shadow-lg"
               }`}
               style={{
                 left: `${particle.x}%`,
@@ -57,21 +62,32 @@ const WeatherBackground = ({ condition }: WeatherBackgroundProps) => {
         </div>
       )}
 
-      {/* Stars for night */}
+      {/* Stars and moon for night */}
       {condition === "night" && (
-        <div className="absolute inset-0">
-          {Array.from({ length: 100 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-white rounded-full animate-pulse-slow"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-              }}
-            />
-          ))}
-        </div>
+        <>
+          <div className="absolute top-20 right-20 w-24 h-24 bg-white/90 rounded-full shadow-[0_0_80px_rgba(255,255,255,0.6)] animate-pulse-slow" />
+          <div className="absolute inset-0">
+            {Array.from({ length: 150 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute bg-white rounded-full animate-pulse-slow"
+                style={{
+                  width: `${Math.random() * 2 + 1}px`,
+                  height: `${Math.random() * 2 + 1}px`,
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 3}s`,
+                  boxShadow: `0 0 ${Math.random() * 4 + 2}px rgba(255,255,255,0.8)`,
+                }}
+              />
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Sun glow for clear day */}
+      {condition === "clear" && (
+        <div className="absolute top-20 right-20 w-32 h-32 bg-accent/40 rounded-full blur-3xl animate-pulse-slow" />
       )}
 
       <style>{`

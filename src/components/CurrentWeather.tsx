@@ -23,12 +23,12 @@ const CurrentWeather = ({
   city,
 }: CurrentWeatherProps) => {
   return (
-    <Card className="glass dark:glass-dark p-8 rounded-3xl border-2 hover:scale-[1.02] transition-transform duration-300">
+    <Card className="glass dark:glass-dark p-8 rounded-3xl border-2 hover-lift animate-fade-in">
       <div className="space-y-6">
         {/* Location & Date */}
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-foreground mb-2">{city}</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-5xl font-bold text-foreground mb-3 tracking-tight">{city}</h1>
+          <p className="text-base text-muted-foreground/70 font-medium">
             {new Date().toLocaleDateString("en-US", {
               weekday: "long",
               year: "numeric",
@@ -36,17 +36,25 @@ const CurrentWeather = ({
               day: "numeric",
             })}
           </p>
+          <p className="text-sm text-muted-foreground/60 mt-1">
+            {new Date().toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </p>
         </div>
 
         {/* Temperature Display */}
         <div className="text-center py-8">
           <div className="relative inline-block">
-            <div className="text-8xl font-bold bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent animate-float">
+            <div className="text-9xl font-black bg-gradient-to-br from-primary via-accent to-primary bg-clip-text text-transparent animate-float drop-shadow-lg">
               {Math.round(temp)}°
             </div>
-            <p className="text-xl text-muted-foreground mt-2">Feels like {Math.round(feelsLike)}°</p>
+            <p className="text-2xl text-muted-foreground/80 mt-4 font-medium">
+              Feels like <span className="text-foreground font-semibold">{Math.round(feelsLike)}°</span>
+            </p>
           </div>
-          <p className="text-2xl font-medium text-foreground mt-4 capitalize">{condition}</p>
+          <p className="text-3xl font-semibold text-foreground mt-6 capitalize tracking-wide">{condition}</p>
         </div>
 
         {/* Weather Details Grid */}

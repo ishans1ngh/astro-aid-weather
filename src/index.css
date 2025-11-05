@@ -12,7 +12,7 @@ All colors MUST be HSL.
     --background: 210 100% 97%;
     --foreground: 222 47% 11%;
 
-    /* Glass cards */
+    /* Glass cards - Enhanced contrast */
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
 
@@ -60,9 +60,10 @@ All colors MUST be HSL.
     --aqi-unhealthy: 25 100% 50%;
     --aqi-very-unhealthy: 0 85% 50%;
 
-    /* Glass effect */
-    --glass-bg: 0 0% 100% / 0.2;
-    --glass-border: 0 0% 100% / 0.3;
+    /* Glass effect - Enhanced contrast */
+    --glass-bg: 0 0% 100% / 0.25;
+    --glass-border: 0 0% 100% / 0.4;
+    --glass-shadow: 0 8px 32px 0 hsl(0 0% 0% / 0.1);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5% 26%;
@@ -114,9 +115,10 @@ All colors MUST be HSL.
     --night-start: 240 70% 10%;
     --night-end: 260 60% 20%;
 
-    /* Glass effect - Dark mode */
-    --glass-bg: 0 0% 0% / 0.3;
-    --glass-border: 0 0% 100% / 0.1;
+    /* Glass effect - Dark mode - Enhanced contrast */
+    --glass-bg: 0 0% 0% / 0.4;
+    --glass-border: 0 0% 100% / 0.15;
+    --glass-shadow: 0 8px 32px 0 hsl(0 0% 0% / 0.3);
 
     --sidebar-background: 240 6% 10%;
     --sidebar-foreground: 240 5% 96%;
@@ -141,11 +143,23 @@ All colors MUST be HSL.
 
 @layer utilities {
   .glass {
-    @apply bg-white/20 backdrop-blur-xl border border-white/30;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.25),
+      rgba(255, 255, 255, 0.1)
+    );
+    @apply backdrop-blur-xl border border-white/40 shadow-lg;
+    box-shadow: var(--glass-shadow);
   }
 
   .glass-dark {
-    @apply bg-black/30 backdrop-blur-xl border border-white/10;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.4),
+      rgba(0, 0, 0, 0.2)
+    );
+    @apply backdrop-blur-xl border border-white/15 shadow-2xl;
+    box-shadow: var(--glass-shadow);
   }
 
   .weather-sunny {
@@ -194,5 +208,47 @@ All colors MUST be HSL.
     animation: shimmer 2s infinite linear;
     background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
     background-size: 1000px 100%;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl;
+  }
+
+  .scroll-smooth {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 0.3) transparent;
+  }
+
+  .scroll-smooth::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .scroll-smooth::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scroll-smooth::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 4px;
+  }
+
+  .scroll-smooth::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
   }
 }

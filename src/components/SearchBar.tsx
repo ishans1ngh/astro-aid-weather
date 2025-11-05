@@ -6,15 +6,17 @@ import { Search, MapPin } from "lucide-react";
 interface SearchBarProps {
   onSearch: (city: string) => void;
   onLocationDetect: () => void;
+  loading?: boolean;
 }
 
-const SearchBar = ({ onSearch, onLocationDetect }: SearchBarProps) => {
+const SearchBar = ({ onSearch, onLocationDetect, loading = false }: SearchBarProps) => {
   const [city, setCity] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (city.trim()) {
+    if (city.trim() && !loading) {
       onSearch(city);
+      setCity("");
     }
   };
 
@@ -34,16 +36,18 @@ const SearchBar = ({ onSearch, onLocationDetect }: SearchBarProps) => {
         type="button"
         onClick={onLocationDetect}
         size="lg"
-        className="glass dark:glass-dark px-6 rounded-2xl border-2 hover:border-primary/50 transition-all"
+        disabled={loading}
+        className="glass dark:glass-dark px-6 rounded-2xl border-2 hover:border-primary/50 transition-all disabled:opacity-50"
       >
         <MapPin className="w-5 h-5" />
       </Button>
       <Button
         type="submit"
         size="lg"
-        className="px-8 rounded-2xl bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all"
+        disabled={loading}
+        className="px-8 rounded-2xl bg-gradient-to-r from-primary via-accent to-primary hover:opacity-90 transition-all disabled:opacity-50 font-semibold"
       >
-        Search
+        {loading ? "Searching..." : "Search"}
       </Button>
     </form>
   );
